@@ -2,42 +2,42 @@ import React from 'react';
 export const productData = [{
   id: 1,
   name: 'Hibiscus',
-  image: 'https://images.unsplash.com/photo-1606989393531-aefccc889366?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80',
+  image: 'https://images.unsplash.com/photo-1622396727845-c15ef9ffb419?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   description: 'Premium dried hibiscus flowers, rich in color and flavor, perfect for teas, beverages, and natural food coloring. Harvested at peak bloom for maximum quality.'
 }, {
   id: 2,
   name: 'Sesame Seeds',
-  image: 'https://images.unsplash.com/photo-1599942904517-ccd52764f7a5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80',
+  image: 'https://images.unsplash.com/photo-1628317321557-68729bee6644?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   description: 'High-quality sesame seeds with excellent oil content, carefully cleaned and sorted. Available in both natural and hulled varieties for various culinary applications.'
 }, {
   id: 3,
   name: 'Cashew Nuts',
-  image: 'https://images.unsplash.com/photo-1594980796927-4d8db64c4109?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80',
+  image: 'https://images.unsplash.com/photo-1502825751399-28baa9b81efe?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   description: 'Premium grade whole cashew kernels, expertly processed to maintain flavor and nutritional value. Available in various sizes and grades to meet international standards.'
 }, {
   id: 4,
   name: 'Shea Nuts',
-  image: 'https://images.unsplash.com/photo-1531526790654-7335f7bdafad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80',
+  image: 'https://images.unsplash.com/photo-1560266455-ef6833599e6e?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   description: 'Ethically sourced shea nuts with high fat content, perfect for cosmetic and food industries. Sustainably harvested to support local communities and ensure premium quality.'
 }];
 export const priceData = [{
   product: 'Hibiscus',
-  price: '$2.50/kg',
+  price: '₦25.50/kg',
   change: '+0.15',
   trend: 'up'
 }, {
   product: 'Sesame Seeds',
-  price: '$1.80/kg',
+  price: '₦21.80/kg',
   change: '-0.05',
   trend: 'down'
 }, {
   product: 'Cashew Nuts',
-  price: '$8.75/kg',
+  price: '₦28.75/kg',
   change: '+0.30',
   trend: 'up'
 }, {
   product: 'Shea Nuts',
-  price: '$3.20/kg',
+  price: '₦23.20/kg',
   change: '+0.10',
   trend: 'up'
 }];

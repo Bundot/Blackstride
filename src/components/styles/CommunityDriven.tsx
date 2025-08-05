@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ArrowUpIcon, ArrowDownIcon, BookOpenIcon, MessageCircleIcon, CalendarIcon, ThumbsUpIcon, UsersIcon, ChevronRightIcon, GlobeIcon, LeafIcon, TruckIcon } from 'lucide-react';
 import { ContactForm } from '../shared/ContactForm';
 import { Logo } from '../shared/Logo';
@@ -22,6 +22,27 @@ const FadeIn: React.FC<{
       {children}
     </div>;
 };
+
+
+function CountUp({ start = 0, end = 100, duration = 2000 }: { start?: number; end?: number; duration?: number }) {
+  const [count, setCount] = useState(start);
+
+  useEffect(() => {
+    const startTime = performance.now();
+
+    const tick = (now: number) => {
+      const progress = Math.min((now - startTime) / duration, 1);
+      const value = Math.floor(start + (end - start) * progress);
+      setCount(value);
+      if (progress < 1) requestAnimationFrame(tick);
+    };
+
+    requestAnimationFrame(tick);
+  }, [start, end, duration]);
+
+  return <span>{count}</span>;
+}
+
 export const CommunityDriven: React.FC = () => {
   // Refs for scroll animations
   const sectionRefs = useRef<(HTMLElement | null)[]>([]);
@@ -358,12 +379,16 @@ export const CommunityDriven: React.FC = () => {
                           Exporters
                         </span>
                       </div>
-                      <a href="#" className="text-emerald-600 hover:text-emerald-700 font-medium text-sm flex items-center group scroll-animation opacity-0 translate-y-8" style={{
+
+
+                      {/* <a href="#" className="text-emerald-600 hover:text-emerald-700 font-medium text-sm flex items-center group scroll-animation opacity-0 translate-y-8" style={{
                     transitionDelay: `${index * 100}ms`
                   }}>
                         View Discussions
                         <ChevronRightIcon className="h-4 w-4 ml-1 transition-transform duration-300 group-hover:translate-x-1" />
-                      </a>
+                      </a> */}
+
+                      
                     </div>
                   </div>
                 </div>
@@ -499,7 +524,11 @@ export const CommunityDriven: React.FC = () => {
                 </div>
                 <p className="text-gray-600 mb-6">{tip.content}</p>
                 <div className="flex justify-between items-center">
-                  <div className="flex items-center">
+
+
+
+
+                  {/* <div className="flex items-center">
                     <div className="flex -space-x-2 animate-fade-in" style={{
                   animationDelay: `${800 + index * 100}ms`
                 }}>
@@ -520,7 +549,11 @@ export const CommunityDriven: React.FC = () => {
                       <MessageCircleIcon className="h-5 w-5 text-emerald-500 mr-1" />
                       <span className="text-sm">16</span>
                     </button>
-                  </div>
+                  </div> */}
+
+
+
+
                 </div>
               </div>)}
           </div>
@@ -651,14 +684,20 @@ export const CommunityDriven: React.FC = () => {
                 </button>
               </div>)}
           </div>
-          <div className="mt-8 text-center scroll-animation opacity-0 translate-y-8">
+
+
+
+          {/* <div className="mt-8 text-center scroll-animation opacity-0 translate-y-8">
             <a href="#" className="inline-block text-emerald-600 hover:text-emerald-700 font-medium group transition-colors">
               View Full Calendar
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 inline ml-1 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </a>
-          </div>
+          </div> */}
+
+
+          
         </div>
       </section>
       {/* Footer */}
@@ -892,20 +931,9 @@ export const CommunityDriven: React.FC = () => {
         .animate-bounce-down-subtle {
           animation: bounce-down-subtle 2s infinite ease-in-out;
         }
-        /* Count up animation for numbers */
-        @keyframes countUp {
-          from {
-            content: attr(data-start);
-          }
-          to {
-            content: attr(data-target);
-          }
-        }
-        .animate-count-up {
-          animation: countUp 2s forwards ease-out;
-          counter-reset: count attr(data-start);
-          animation-delay: 0.5s;
-        }
-      `}</style>
+       
+      `}
+      
+      </style>
     </div>;
 };
