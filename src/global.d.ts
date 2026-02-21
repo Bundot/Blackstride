@@ -6,3 +6,8 @@ declare module 'react' {
     global?: boolean;
   }
 }
+
+declare module '*.svg' {
+  const src: string;
+  export default src;
+}

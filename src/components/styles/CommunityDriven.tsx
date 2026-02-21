@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { ArrowUpIcon, ArrowDownIcon, BookOpenIcon, MessageCircleIcon, CalendarIcon, ThumbsUpIcon, UsersIcon, ChevronRightIcon, GlobeIcon, LeafIcon, TruckIcon } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { ArrowUpIcon, ArrowDownIcon, BookOpenIcon, MessageCircleIcon, CalendarIcon, ThumbsUpIcon, UsersIcon, ChevronRightIcon, GlobeIcon, LeafIcon, TruckIcon, BarChart3Icon, SearchIcon, ArrowRightIcon, FlaskConicalIcon } from 'lucide-react';
 import { ContactForm } from '../shared/ContactForm';
 import { Logo } from '../shared/Logo';
 import { productData, priceData, exportTips, companyInfo } from '../shared/ProductData';
@@ -24,28 +24,9 @@ const FadeIn: React.FC<{
 };
 
 
-function CountUp({ start = 0, end = 100, duration = 2000 }: { start?: number; end?: number; duration?: number }) {
-  const [count, setCount] = useState(start);
-
-  useEffect(() => {
-    const startTime = performance.now();
-
-    const tick = (now: number) => {
-      const progress = Math.min((now - startTime) / duration, 1);
-      const value = Math.floor(start + (end - start) * progress);
-      setCount(value);
-      if (progress < 1) requestAnimationFrame(tick);
-    };
-
-    requestAnimationFrame(tick);
-  }, [start, end, duration]);
-
-  return <span>{count}</span>;
-}
 
 export const CommunityDriven: React.FC = () => {
-  // Refs for scroll animations
-  const sectionRefs = useRef<(HTMLElement | null)[]>([]);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   // Observer for scroll animations
   useEffect(() => {
     const observer = new IntersectionObserver(entries => {
@@ -70,7 +51,9 @@ export const CommunityDriven: React.FC = () => {
       elements.forEach(el => observer.unobserve(el));
     };
   }, []);
-  return <div className="bg-white text-gray-800 w-full font-sans overflow-hidden">
+  return (
+    <div>
+      <div className="bg-white text-gray-800 w-full font-sans overflow-hidden">
       {/* Hero Section with animated background */}
       <section className="relative bg-gradient-to-r from-emerald-500 to-teal-600 text-white py-20 overflow-hidden">
         {/* Animated background elements */}
@@ -83,31 +66,82 @@ export const CommunityDriven: React.FC = () => {
           <nav className="flex justify-between items-center py-4 mb-12">
             <Logo variant="light" size="md" className="animate-fade-in" />
             <div className="hidden md:flex items-center space-x-6 animate-fade-in">
-              <a href="#" className="text-white hover:text-emerald-100 transition-colors">
-                Home
+              <a
+                href="#/explorers"
+                className="text-emerald-900 bg-white/90 hover:bg-white text-sm font-semibold px-4 py-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 ring-1 ring-white/60 animate-pulse-slow"
+              >
+                Become an Explorer
               </a>
-              <a href="#" className="text-white hover:text-emerald-100 transition-colors">
-                About
+              <a href="#/quality" className="text-white hover:text-emerald-100 transition-colors">
+                Labs
               </a>
-              <a href="#" className="text-white hover:text-emerald-100 transition-colors">
-                Products
+              <a href="#/process" className="text-white hover:text-emerald-100 transition-colors">
+                Our Process
               </a>
-              <a href="#" className="text-white hover:text-emerald-100 transition-colors">
-                Community
-              </a>
-              <a href="#" className="text-white hover:text-emerald-100 transition-colors">
-                Contact
-              </a>
-              <a href="#" className="bg-white text-emerald-600 hover:bg-emerald-50 px-4 py-2 rounded-full transition-colors font-medium">
-                Join Now
-              </a>
+              <button 
+                onClick={() => {
+                  window.location.hash = '#/dashboard';
+                }}
+                className="bg-white/20 backdrop-blur-sm text-white hover:bg-white/30 px-6 py-2 rounded-full transition-all duration-300 font-medium flex items-center shadow-lg hover:shadow-xl hover:-translate-y-1"
+              >
+                <BarChart3Icon className="h-4 w-4 mr-2" />
+                Dashboard
+              </button>
             </div>
-            <button className="md:hidden text-white">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
+            <button 
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden text-white relative z-50"
+            >
+              {isMobileMenuOpen ? (
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              ) : (
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              )}
             </button>
           </nav>
+          
+          {/* Mobile Menu Overlay */}
+          {isMobileMenuOpen && (
+            <div className="md:hidden fixed inset-0 bg-emerald-600 bg-opacity-95 z-40 pt-20">
+              <div className="flex flex-col items-center justify-center h-full space-y-6 px-6">
+                <a
+                  href="#/explorers"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="text-emerald-900 bg-white/90 hover:bg-white text-xl font-semibold px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 ring-1 ring-white/60 animate-pulse-slow"
+                >
+                  Become an Explorer
+                </a>
+                <a
+                  href="#/quality"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="text-white text-xl font-medium hover:text-emerald-100 transition-colors"
+                >
+                  Labs
+                </a>
+                <a
+                  href="#/process"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="text-white text-xl font-medium hover:text-emerald-100 transition-colors"
+                >
+                  View Our Process
+                </a>
+                <button 
+                  onClick={() => {
+                    window.location.hash = '#/dashboard';
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="text-white text-xl font-medium hover:text-emerald-100 transition-colors flex items-center"
+                >
+                  <BarChart3Icon className="h-5 w-5 mr-2" />
+                  Dashboard
+                </button>
+              </div>
+            </div>
+          )}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <FadeIn delay="200ms">
@@ -131,9 +165,10 @@ export const CommunityDriven: React.FC = () => {
                   <button className="bg-white text-emerald-600 hover:bg-gray-100 py-3 px-8 rounded-full transition-all duration-300 font-medium shadow-lg hover:shadow-xl hover:-translate-y-1">
                     Join Community
                   </button>
-                  <button className="bg-transparent hover:bg-white/10 text-white py-3 px-8 rounded-full border border-white/30 transition-all duration-300 font-medium backdrop-blur-sm hover:border-white">
-                    Learn More
-                  </button>
+                  <a href="#/dashboard" className="bg-emerald-700 hover:bg-emerald-800 text-white py-3 px-8 rounded-full transition-all duration-300 font-medium shadow-lg hover:shadow-xl hover:-translate-y-1 flex items-center">
+                    <BarChart3Icon className="h-5 w-5 mr-2" />
+                    View Dashboard
+                  </a>
                 </div>
               </FadeIn>
             </div>
@@ -196,7 +231,7 @@ export const CommunityDriven: React.FC = () => {
               }}>
                     Read More
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7m0 0l-7-7m7 7V3"></path>
                     </svg>
                   </a>
                 </div>
@@ -334,10 +369,67 @@ export const CommunityDriven: React.FC = () => {
           }}>
                 <div className="bg-white/20 p-4 rounded-full inline-block mb-6 animate-pulse-slow">
                   {feature.icon}
-                </div>
-                <h3 className="text-2xl font-bold mb-4">{feature.title}</h3>
-                <p className="text-white/80">{feature.description}</p>
+              </div>
+              <h3 className="text-2xl font-bold mb-4">{feature.title}</h3>
+              <p className="text-white/80">{feature.description}</p>
               </div>)}
+          </div>
+        </div>
+      </section>
+      {/* Explore */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-6 md:px-12">
+          <div className="text-center mb-16">
+            <div className="inline-block mb-6 px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm font-medium scroll-animation opacity-0 translate-y-8">
+              Explore
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800 scroll-animation opacity-0 translate-y-8">
+              Explore Black Stride
+            </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto scroll-animation opacity-0 translate-y-8">
+              These sections are available as dedicated pages for a cleaner browsing experience.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-gradient-to-br from-emerald-50 to-green-50 rounded-2xl p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 scroll-animation opacity-0 translate-y-8">
+              <div className="bg-emerald-100 p-4 rounded-xl mb-6 inline-block">
+                <BarChart3Icon className="h-8 w-8 text-emerald-600" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-800 mb-3">Dashboard</h3>
+              <p className="text-gray-600 mb-6">Crop seasons and weekly pricing with charts.</p>
+              <a href="#/dashboard" className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 px-6 rounded-xl transition-colors font-medium flex items-center justify-center">
+                <BarChart3Icon className="h-5 w-5 mr-2" />
+                Open Dashboard
+              </a>
+            </div>
+            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 scroll-animation opacity-0 translate-y-8" style={{ transitionDelay: '100ms' }}>
+              <div className="bg-blue-100 p-4 rounded-xl mb-6 inline-block">
+                <SearchIcon className="h-8 w-8 text-blue-600" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-800 mb-3">Explorers</h3>
+              <p className="text-gray-600 mb-6">Distributed field verification and market intelligence.</p>
+              <a href="#/explorers" className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-xl transition-colors font-medium flex items-center justify-center">
+                <SearchIcon className="h-5 w-5 mr-2" />
+                View Explorers
+              </a>
+            </div>
+            <div className="bg-gradient-to-br from-emerald-50 to-green-50 rounded-2xl p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 scroll-animation opacity-0 translate-y-8" style={{ transitionDelay: '200ms' }}>
+              <div className="bg-emerald-100 p-4 rounded-xl mb-6 inline-block">
+                <FlaskConicalIcon className="h-8 w-8 text-emerald-600" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-800 mb-3">Quality & Certification</h3>
+              <p className="text-gray-600 mb-6">Lab testing, compliance, and export certification.</p>
+              <a href="#/quality" className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 px-6 rounded-xl transition-colors font-medium flex items-center justify-center">
+                <FlaskConicalIcon className="h-5 w-5 mr-2" />
+                View Quality
+              </a>
+            </div>
+          </div>
+          <div className="mt-10 text-center">
+            <a href="#/process" className="inline-flex items-center bg-gray-900 hover:bg-black text-white py-3 px-8 rounded-xl transition-colors font-medium">
+              View Our Process
+              <ArrowRightIcon className="h-5 w-5 ml-2" />
+            </a>
           </div>
         </div>
       </section>
@@ -379,16 +471,12 @@ export const CommunityDriven: React.FC = () => {
                           Exporters
                         </span>
                       </div>
-
-
-                      {/* <a href="#" className="text-emerald-600 hover:text-emerald-700 font-medium text-sm flex items-center group scroll-animation opacity-0 translate-y-8" style={{
+                      <a href="#" className="text-emerald-600 hover:text-emerald-700 font-medium text-sm flex items-center group scroll-animation opacity-0 translate-y-8" style={{
                     transitionDelay: `${index * 100}ms`
                   }}>
                         View Discussions
                         <ChevronRightIcon className="h-4 w-4 ml-1 transition-transform duration-300 group-hover:translate-x-1" />
-                      </a> */}
-
-                      
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -524,11 +612,7 @@ export const CommunityDriven: React.FC = () => {
                 </div>
                 <p className="text-gray-600 mb-6">{tip.content}</p>
                 <div className="flex justify-between items-center">
-
-
-
-
-                  {/* <div className="flex items-center">
+                  <div className="flex items-center">
                     <div className="flex -space-x-2 animate-fade-in" style={{
                   animationDelay: `${800 + index * 100}ms`
                 }}>
@@ -540,20 +624,6 @@ export const CommunityDriven: React.FC = () => {
                       +12 contributors
                     </span>
                   </div>
-                  <div className="flex items-center">
-                    <button className="flex items-center text-gray-500 hover:text-emerald-600 transition-colors mr-3">
-                      <ThumbsUpIcon className="h-5 w-5 text-emerald-500 mr-1" />
-                      <span className="text-sm">48</span>
-                    </button>
-                    <button className="flex items-center text-gray-500 hover:text-emerald-600 transition-colors">
-                      <MessageCircleIcon className="h-5 w-5 text-emerald-500 mr-1" />
-                      <span className="text-sm">16</span>
-                    </button>
-                  </div> */}
-
-
-
-
                 </div>
               </div>)}
           </div>
@@ -691,7 +761,7 @@ export const CommunityDriven: React.FC = () => {
             <a href="#" className="inline-block text-emerald-600 hover:text-emerald-700 font-medium group transition-colors">
               View Full Calendar
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 inline ml-1 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7m0 0l-7-7m7 7V3"></path>
               </svg>
             </a>
           </div> */}
@@ -732,7 +802,7 @@ export const CommunityDriven: React.FC = () => {
                 </a>
                 <a href="#" className="bg-gray-700 hover:bg-emerald-600 h-10 w-10 rounded-full flex items-center justify-center transition-all duration-300 hover:-translate-y-1">
                   <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path fillRule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clipRule="evenodd" />
+                    <path fillRule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344 1.064-.137 1.791-.3 2.427-.465 1.067-.048 1.407-.06 4.123-.06zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clipRule="evenodd" />
                   </svg>
                 </a>
                 <a href="#" className="bg-gray-700 hover:bg-emerald-600 h-10 w-10 rounded-full flex items-center justify-center transition-all duration-300 hover:-translate-y-1">
@@ -907,33 +977,9 @@ export const CommunityDriven: React.FC = () => {
           animation: pulse-slow 5s infinite ease-in-out;
         }
         /* Subtle bounce for arrows */
-        @keyframes bounce-subtle {
-          0%,
-          100% {
-            transform: translateY(0);
-          }
-          50% {
-            transform: translateY(-3px);
-          }
-        }
-        .animate-bounce-subtle {
-          animation: bounce-subtle 2s infinite ease-in-out;
-        }
-        @keyframes bounce-down-subtle {
-          0%,
-          100% {
-            transform: translateY(0);
-          }
-          50% {
-            transform: translateY(3px);
-          }
-        }
-        .animate-bounce-down-subtle {
-          animation: bounce-down-subtle 2s infinite ease-in-out;
-        }
-       
       `}
-      
       </style>
-    </div>;
+    </div>
+  </div>
+);
 };
